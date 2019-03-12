@@ -22,7 +22,7 @@ namespace CustomerReviews.Web.Controllers.Api
         /// </summary>
         /// <param name="productId">The Product id.</param>
         [HttpGet]
-        [Route("getByProductId/{productId}")]
+        [Route("{productId}")]
         [ResponseType(typeof(FavoriteProperty[]))]
         public IHttpActionResult GetProductFavoriteProperties(string productId)
         {

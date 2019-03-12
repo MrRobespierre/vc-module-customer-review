@@ -20,7 +20,7 @@ namespace CustomerReviews.Data.Repositories
 
         public IQueryable<FavoritePropertyEntity> FavoriteProperties => GetAsQueryable<FavoritePropertyEntity>();
 
-        public IQueryable<CustomerReviewEntity> CustomerReviews => GetAsQueryable<CustomerReviewEntity>();
+        public IQueryable<CustomerReviewEntity> CustomerReviews => GetAsQueryable<CustomerReviewEntity>().Include(x => x.PropertyValues);
 
         public FavoritePropertyEntity[] GetProductFavoriteProperties(string productId)
         {
@@ -30,14 +30,12 @@ namespace CustomerReviews.Data.Repositories
 
         public CustomerReviewEntity GetCustomerReview(string id)
         {
-            return CustomerReviews.Include(x => x.PropertyValues)
-                                  .FirstOrDefault(x => x.Id == id);
+            return CustomerReviews.FirstOrDefault(x => x.Id == id);
         }
 
         public CustomerReviewEntity[] GetByIds(string[] ids)
         {
-            CustomerReviewEntity[] result = CustomerReviews.Include(x => x.PropertyValues)
-                                                           .Where(x => ids.Contains(x.Id))
+            CustomerReviewEntity[] result = CustomerReviews.Where(x => ids.Contains(x.Id))
                                                            .ToArray();
 
             return result;
@@ -65,6 +63,10 @@ namespace CustomerReviews.Data.Repositories
                         .WithMany(x => x.PropertyValues)
                         .HasForeignKey(x => x.ReviewId)
                         .WillCascadeOnDelete(true);
+            modelBuilder.Entity<FavoritePropertyValueEntity>()
+                        .HasRequired(x => x.Property)
+                        .WithMany()
+                        .HasForeignKey(x => x.PropertyId);
 
             base.OnModelCreating(modelBuilder);
         }

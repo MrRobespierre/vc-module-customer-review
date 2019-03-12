@@ -55,7 +55,7 @@ namespace CustomerReviews.Data.Model
             customerReview.ProductId = ProductId;
             customerReview.ProductRating = ProductRating;
             customerReview.PropertyValues = PropertyValues.Select(
-                x => x.ToModel(AbstractTypeFactory<FavoritePropertyValue>.TryCreateInstance(), customerReview)).ToArray();
+                x => x.ToModel(AbstractTypeFactory<FavoritePropertyValue>.TryCreateInstance())).ToArray();
 
             return customerReview;
         }

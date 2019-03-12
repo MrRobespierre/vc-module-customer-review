@@ -9,9 +9,9 @@ namespace CustomerReviews.Core.Model
         {
         }
 
-        public FavoriteProperty Property { get; set; }
+        public string PropertyId { get; set; }
 
-        public CustomerReview Review { get; set; }
+        public string ReviewId { get; set; }
 
         public int Rating { get; set; }
     }

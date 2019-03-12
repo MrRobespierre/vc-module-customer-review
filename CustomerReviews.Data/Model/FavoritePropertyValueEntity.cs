@@ -18,7 +18,6 @@ namespace CustomerReviews.Data.Model
         [ForeignKey(nameof(Property))]
         public string PropertyId { get; set; }
 
-        // TODO не надо выгружать каждый раз
         [Required]
         public FavoritePropertyEntity Property { get; set; }
 
@@ -32,11 +31,11 @@ namespace CustomerReviews.Data.Model
         [Required]
         public int Rating { get; set; }
 
-        public FavoritePropertyValue ToModel(FavoritePropertyValue model, CustomerReview customerReview)
+        public FavoritePropertyValue ToModel(FavoritePropertyValue model)
         {
             model.Id = Id;
-            model.Property = Property?.ToModel(new FavoriteProperty());
-            model.Review = customerReview;
+            model.PropertyId = PropertyId;
+            model.ReviewId = ReviewId;
             model.Rating = Rating;
 
             return model;
@@ -44,15 +43,11 @@ namespace CustomerReviews.Data.Model
 
         public FavoritePropertyValueEntity FromModel(FavoritePropertyValue model, PrimaryKeyResolvingMap pkMap)
         {
+            pkMap.AddPair(model, this);
+
             Id = model.Id;
-            
-            // TODO надо ли конвертировать эти связи?
-            PropertyId = model.Property.Id;
-            Property = AbstractTypeFactory<FavoritePropertyEntity>.TryCreateInstance().FromModel(model.Property, pkMap);
-            ReviewId = model.Review.Id;
-            Review = AbstractTypeFactory<CustomerReviewEntity>.TryCreateInstance().FromModel(model.Review, pkMap);
-
-
+            PropertyId = model.PropertyId;
+            ReviewId = model.ReviewId;
             Rating = model.Rating;
 
             return this;

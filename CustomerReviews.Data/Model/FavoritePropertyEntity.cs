@@ -33,24 +33,5 @@ namespace CustomerReviews.Data.Model
 
             return model;
         }
-
-        public FavoritePropertyEntity FromModel(FavoriteProperty model, PrimaryKeyResolvingMap pkMap)
-        {
-            pkMap.AddPair(model, this);
-
-            Id = model.Id;
-            ProductId = model.ProductId;
-            PropertyId = model.PropertyId;
-
-            return this;
-        }
-
-        public void Patch(FavoritePropertyEntity target)
-        {
-            target.Id = Id;
-            target.ProductId = ProductId;
-            target.PropertyId = PropertyId;
-            target.Name = Name;
-        }
     }
 }

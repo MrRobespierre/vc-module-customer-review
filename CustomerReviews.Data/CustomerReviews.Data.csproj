@@ -89,6 +89,7 @@
     <Compile Include="Repositories\ICustomerReviewRepository.cs" />
     <Compile Include="Services\CustomerReviewSearchService.cs" />
     <Compile Include="Services\CustomerReviewService.cs" />
+    <Compile Include="Services\FavoritePropertiesService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CustomerReviews.Core\CustomerReviews.Core.csproj">

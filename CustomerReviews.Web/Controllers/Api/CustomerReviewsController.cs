@@ -83,7 +83,5 @@ namespace CustomerReviews.Web.Controllers.Api
             _customerReviewService.DeleteCustomerReviews(ids);
             return StatusCode(HttpStatusCode.NoContent);
         }
-
-
     }
 }
