@@ -49,6 +49,27 @@ namespace CustomerReviews.Data.Migrations
                 AuthorNickname = "John Doe",
                 Content = "Liked that"
             });
+
+            context.AddOrUpdate(new FavoritePropertyEntity
+            {
+                Id = "299aa36d0426476d985f670a51d37298",
+                ProductId = "0f7a77cc1b9a46a29f6a159e5cd49ad1",
+                Name = "Sound quality"
+            });
+
+            context.AddOrUpdate(new FavoritePropertyEntity
+            {
+                Id = "2b347ecf337549c9bbe17413446a9d85",
+                ProductId = "0f7a77cc1b9a46a29f6a159e5cd49ad1",
+                Name = "Wearing comfort"
+            });
+
+            context.AddOrUpdate(new FavoritePropertyEntity
+            {
+                Id = "9e0c553cfc6c483c8a23b467b7e40945",
+                ProductId = "0f7a77cc1b9a46a29f6a159e5cd49ad1",
+                Name = "Design"
+            });
         }
     }
 }

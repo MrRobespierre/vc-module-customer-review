@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 using CustomerReviews.Core.Model;
 
@@ -12,6 +15,7 @@ namespace CustomerReviews.Data.Model
     {
         public CustomerReviewEntity()
         {
+            PropertyValues = new NullCollection<FavoritePropertyValueEntity>();
         }
 
 
@@ -32,7 +36,7 @@ namespace CustomerReviews.Data.Model
         [Required]
         public int ProductRating { get; set; }
 
-        public FavoritePropertyValueEntity[] PropertyValues { get; set; }
+        public ObservableCollection<FavoritePropertyValueEntity> PropertyValues { get; set; }
 
         public CustomerReview ToModel(CustomerReview customerReview)
         {
@@ -50,6 +54,8 @@ namespace CustomerReviews.Data.Model
             customerReview.IsActive = IsActive;
             customerReview.ProductId = ProductId;
             customerReview.ProductRating = ProductRating;
+            customerReview.PropertyValues = PropertyValues.Select(
+                x => x.ToModel(AbstractTypeFactory<FavoritePropertyValue>.TryCreateInstance(), customerReview)).ToArray();
 
             return customerReview;
         }
@@ -72,6 +78,13 @@ namespace CustomerReviews.Data.Model
             IsActive = customerReview.IsActive;
             ProductId = customerReview.ProductId;
             ProductRating = customerReview.ProductRating;
+            IEnumerable<FavoritePropertyValueEntity> propertyValues = customerReview
+                                                                      .PropertyValues
+                                                                      .Select(x => AbstractTypeFactory<FavoritePropertyValueEntity>
+                                                                                   .TryCreateInstance()
+                                                                                   .FromModel(x, pkMap));
+            PropertyValues = new ObservableCollection<FavoritePropertyValueEntity>(propertyValues);
+
 
             return this;
         }

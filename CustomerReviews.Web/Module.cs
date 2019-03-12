@@ -37,11 +37,14 @@ namespace CustomerReviews.Web
             // This method is called for each installed module on the first stage of initialization.
 
             // Register implementations:
-            _container.RegisterType<ICustomerReviewRepository>(new InjectionFactory(c => new CustomerReviewRepository(_connectionString, new EntityPrimaryKeyGeneratorInterceptor(), _container.Resolve<AuditableInterceptor>())));
+            _container.RegisterType<ICustomerReviewRepository>(new InjectionFactory(c => 
+                new CustomerReviewRepository(
+                    _connectionString, 
+                    new EntityPrimaryKeyGeneratorInterceptor(), 
+                    _container.Resolve<AuditableInterceptor>())));
             _container.RegisterType<ICustomerReviewSearchService, CustomerReviewSearchService>();
             _container.RegisterType<ICustomerReviewService, CustomerReviewService>();
-
-            // Try to avoid calling _container.Resolve<>();
+            _container.RegisterType<IFavoritePropertyService, FavoritePropertiesService>();
         }
 
         public override void PostInitialize()

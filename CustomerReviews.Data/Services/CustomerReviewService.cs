@@ -18,6 +18,15 @@ namespace CustomerReviews.Data.Services
             _repositoryFactory = repositoryFactory;
         }
 
+        public CustomerReview GetById(string id)
+        {
+            using (ICustomerReviewRepository repository = _repositoryFactory())
+            {
+                CustomerReviewEntity entity = repository.GetCustomerReview(id);
+                return entity.ToModel(AbstractTypeFactory<CustomerReview>.TryCreateInstance());
+            }
+        }
+
         public CustomerReview[] GetByIds(string[] ids)
         {
             using (ICustomerReviewRepository repository = _repositoryFactory())
@@ -70,6 +79,26 @@ namespace CustomerReviews.Data.Services
             {
                 repository.DeleteCustomerReviews(ids);
                 CommitChanges(repository);
+            }
+        }
+    }
+
+    public sealed class FavoritePropertiesService : ServiceBase, IFavoritePropertyService
+    {
+        private readonly Func<ICustomerReviewRepository> _repositoryFactory;
+
+        public FavoritePropertiesService(Func<ICustomerReviewRepository> repositoryFactory)
+        {
+            _repositoryFactory = repositoryFactory;
+        }
+
+        public FavoriteProperty[] GetProductFavoriteProperties(string productId)
+        {
+            using (ICustomerReviewRepository repository = _repositoryFactory())
+            {
+                return repository.GetProductFavoriteProperties(productId).
+                                  Select(x => x.ToModel(AbstractTypeFactory<FavoriteProperty>.TryCreateInstance())).
+                                  ToArray();
             }
         }
     }

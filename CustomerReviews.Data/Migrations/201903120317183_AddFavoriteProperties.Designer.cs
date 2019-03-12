@@ -7,13 +7,13 @@ namespace CustomerReviews.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Initial1 : IMigrationMetadata
+    public sealed partial class AddFavoriteProperties : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddFavoriteProperties));
         
         string IMigrationMetadata.Id
         {
-            get { return "201903111435309_Initial1"; }
+            get { return "201903120317183_AddFavoriteProperties"; }
         }
         
         string IMigrationMetadata.Source

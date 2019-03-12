@@ -76,9 +76,9 @@
     <Compile Include="Migrations\201810051551355_Initial.Designer.cs">
       <DependentUpon>201810051551355_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201903111435309_Initial1.cs" />
-    <Compile Include="Migrations\201903111435309_Initial1.Designer.cs">
-      <DependentUpon>201903111435309_Initial1.cs</DependentUpon>
+    <Compile Include="Migrations\201903120317183_AddFavoriteProperties.cs" />
+    <Compile Include="Migrations\201903120317183_AddFavoriteProperties.Designer.cs">
+      <DependentUpon>201903120317183_AddFavoriteProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\CustomerReviewEntity.cs" />
@@ -100,8 +100,8 @@
     <EmbeddedResource Include="Migrations\201810051551355_Initial.resx">
       <DependentUpon>201810051551355_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201903111435309_Initial1.resx">
-      <DependentUpon>201903111435309_Initial1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201903120317183_AddFavoriteProperties.resx">
+      <DependentUpon>201903120317183_AddFavoriteProperties.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

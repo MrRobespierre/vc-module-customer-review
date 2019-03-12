@@ -18,11 +18,29 @@ namespace CustomerReviews.Data.Repositories
             Configuration.LazyLoadingEnabled = false;
         }
 
+        public IQueryable<FavoritePropertyEntity> FavoriteProperties => GetAsQueryable<FavoritePropertyEntity>();
+
         public IQueryable<CustomerReviewEntity> CustomerReviews => GetAsQueryable<CustomerReviewEntity>();
-        
+
+        public FavoritePropertyEntity[] GetProductFavoriteProperties(string productId)
+        {
+            FavoritePropertyEntity[] result = FavoriteProperties.Where(x => x.ProductId == productId).ToArray();
+            return result;
+        }
+
+        public CustomerReviewEntity GetCustomerReview(string id)
+        {
+            return CustomerReviews.Include(x => x.PropertyValues)
+                                  .FirstOrDefault(x => x.Id == id);
+        }
+
         public CustomerReviewEntity[] GetByIds(string[] ids)
         {
-            return CustomerReviews.Where(x => ids.Contains(x.Id)).ToArray();
+            CustomerReviewEntity[] result = CustomerReviews.Include(x => x.PropertyValues)
+                                                           .Where(x => ids.Contains(x.Id))
+                                                           .ToArray();
+
+            return result;
         }
 
         public void DeleteCustomerReviews(string[] ids)
@@ -38,8 +56,16 @@ namespace CustomerReviews.Data.Repositories
         {
             modelBuilder.Entity<CustomerReviewEntity>().ToTable("CustomerReview").HasKey(x => x.Id).Property(x => x.Id);
             modelBuilder.Entity<FavoritePropertyEntity>().ToTable("FavoriteProperty").HasKey(x => x.Id).Property(x => x.Id);
-            modelBuilder.Entity<FavoritePropertyValueEntity>().ToTable("FavoritePropertyValue").HasKey(x => x.Id).Property(x => x.Id);
-            
+            modelBuilder.Entity<FavoritePropertyValueEntity>()
+                        .ToTable("FavoritePropertyValue")
+                        .HasKey(x => x.Id)
+                        .Property(x => x.Id);
+            modelBuilder.Entity<FavoritePropertyValueEntity>()
+                        .HasRequired(x => x.Review)
+                        .WithMany(x => x.PropertyValues)
+                        .HasForeignKey(x => x.ReviewId)
+                        .WillCascadeOnDelete(true);
+
             base.OnModelCreating(modelBuilder);
         }
     }

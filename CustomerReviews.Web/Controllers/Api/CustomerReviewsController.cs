@@ -7,10 +7,11 @@ using CustomerReviews.Web.Security;
 using VirtoCommerce.Domain.Commerce.Model.Search;
 using VirtoCommerce.Platform.Core.Web.Security;
 
+
 namespace CustomerReviews.Web.Controllers.Api
 {
     [RoutePrefix("api/customerReviews")]
-    public class CustomerReviewsController : ApiController
+    public sealed class CustomerReviewsController : ApiController
     {
         private readonly ICustomerReviewSearchService _customerReviewSearchService;
         private readonly ICustomerReviewService _customerReviewService;
@@ -19,10 +20,25 @@ namespace CustomerReviews.Web.Controllers.Api
         {
         }
 
-        public CustomerReviewsController(ICustomerReviewSearchService customerReviewSearchService, ICustomerReviewService customerReviewService)
+        public CustomerReviewsController(
+            ICustomerReviewSearchService customerReviewSearchService, 
+            ICustomerReviewService customerReviewService)
         {
             _customerReviewSearchService = customerReviewSearchService;
             _customerReviewService = customerReviewService;
+        }
+
+        /// <summary>
+        /// Gets customer review by id.
+        /// </summary>
+        /// <param name="id">The customer review id.</param>
+        [HttpGet]
+        [Route("{id}")]
+        [ResponseType(typeof(CustomerReview))]
+        public IHttpActionResult GetProductFavoriteProperties(string id)
+        {
+            CustomerReview customerReview = _customerReviewService.GetById(id);
+            return Ok(customerReview);
         }
 
         /// <summary>
@@ -67,5 +83,7 @@ namespace CustomerReviews.Web.Controllers.Api
             _customerReviewService.DeleteCustomerReviews(ids);
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+
     }
 }

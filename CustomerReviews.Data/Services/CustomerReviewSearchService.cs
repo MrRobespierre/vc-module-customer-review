@@ -19,7 +19,7 @@ namespace CustomerReviews.Data.Services
         private readonly Func<ICustomerReviewRepository> _repositoryFactory;
         private readonly ICustomerReviewService _customerReviewService;
 
-        public CustomerReviewSearchService(Func<ICustomerReviewRepository> repositoryFactory, 
+        public CustomerReviewSearchService(Func<ICustomerReviewRepository> repositoryFactory,
             ICustomerReviewService customerReviewService)
         {
             _repositoryFactory = repositoryFactory;
