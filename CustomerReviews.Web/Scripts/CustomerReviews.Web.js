@@ -45,5 +45,16 @@ angular.module(moduleTemplateName, [])
             template: 'Modules/$(CustomerReviews.Web)/Scripts/widgets/customerReviewWidget.tpl.html'
         };
         widgetService.registerWidget(itemReviewsWidget, 'itemDetail');
+
+        var favoritePropertiesWidget = {
+            template: 'Modules/$(CustomerReviews.Web)/Scripts/widgets/favoritePropertiesWidget.tpl.html',
+            size: [3, 1]
+        };
+        widgetService.registerWidget(favoritePropertiesWidget, 'reviewDetail');
+
+        var reviewRatingWidget = {
+            template: 'Modules/$(CustomerReviews.Web)/Scripts/widgets/reviewRatingWidget.tpl.html'
+        };
+        widgetService.registerWidget(reviewRatingWidget, 'reviewDetail');
     }
 ]);

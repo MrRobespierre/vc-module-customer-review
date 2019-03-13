@@ -1,5 +1,6 @@
 angular.module('CustomerReviews.Web')
-    .controller('CustomerReviews.Web.reviewsListController', ['$scope', 'CustomerReviews.WebApi', 'platformWebApp.bladeUtils', 'uiGridConstants', 'platformWebApp.uiGridHelper',
+    .controller('CustomerReviews.Web.reviewsListController',
+        ['$scope', 'CustomerReviews.WebApi', 'platformWebApp.bladeUtils', 'uiGridConstants', 'platformWebApp.uiGridHelper',
         function ($scope, reviewsApi, bladeUtils, uiGridConstants, uiGridHelper) {
             $scope.uiGridConstants = uiGridConstants;
 
@@ -28,8 +29,8 @@ angular.module('CustomerReviews.Web')
                     currentEntityId: data.id,
                     currentEntity: data,
                     title: data.name,
-                    controller: 'virtoCommerce.storeModule.storeDetailController',
-                    template: 'Modules/$(VirtoCommerce.Store)/Scripts/blades/store-detail.tpl.html'
+                    controller: 'CustomerReviews.Web.reviewDetailController',
+                    template: 'Modules/$(CustomerReviews.Web)/Scripts/blades/review-detail.tpl.html'
                 };
                 bladeNavigationService.showBlade(newBlade, blade);
             }

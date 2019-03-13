@@ -117,8 +117,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Localizations\en.customerReviews.json" />
+    <Content Include="Scripts\blades\review-detail.js" />
+    <Content Include="Scripts\blades\review-detail.tpl.html" />
     <Content Include="Scripts\widgets\customerReviewWidget.js" />
     <Content Include="Scripts\widgets\customerReviewWidget.tpl.html" />
+    <Content Include="Scripts\widgets\favoritePropertiesWidget.tpl.html" />
+    <Content Include="Scripts\widgets\reviewRatingWidget.tpl.html" />
     <None Include="module.ignore" />
     <None Include="packages.config" />
     <None Include="Content\help\index.html" />
@@ -194,7 +198,8 @@
     <Error Condition="!Exists('..\packages\VirtoCommerce.Module.0.12.0\build\VirtoCommerce.Module.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\VirtoCommerce.Module.0.12.0\build\VirtoCommerce.Module.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>iisreset</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
