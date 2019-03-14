@@ -1,13 +1,24 @@
 angular.module('CustomerReviews.Web')
     .controller('CustomerReviews.Web.customerReviewWidgetController', ['$scope', 'CustomerReviews.WebApi', 'platformWebApp.bladeNavigationService', function ($scope, reviewsApi, bladeNavigationService) {
         var blade = $scope.blade;
-        var filter = { take: 0 };
+        var filter = { };
 
         function refresh() {
             $scope.loading = true;
             reviewsApi.search(filter, function (data) {
                 $scope.loading = false;
                 $scope.totalCount = data.totalCount;
+
+                if (data.totalCount === 0) {
+                    $scope.averageRating = 0;
+                } else {
+                    var sum = 0;
+                    data.results.forEach(function (review) {
+                        sum += review.productRating;
+                    });
+
+                    $scope.averageRating = sum / data.totalCount;
+                }
             });
         }
 

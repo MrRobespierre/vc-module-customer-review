@@ -122,7 +122,6 @@
     <Content Include="Scripts\widgets\customerReviewWidget.js" />
     <Content Include="Scripts\widgets\customerReviewWidget.tpl.html" />
     <Content Include="Scripts\widgets\favoritePropertiesWidget.tpl.html" />
-    <Content Include="Scripts\widgets\reviewRatingWidget.tpl.html" />
     <None Include="module.ignore" />
     <None Include="packages.config" />
     <None Include="Content\help\index.html" />

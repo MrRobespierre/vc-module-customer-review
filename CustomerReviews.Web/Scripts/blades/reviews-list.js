@@ -35,20 +35,6 @@ angular.module('CustomerReviews.Web')
                 bladeNavigationService.showBlade(newBlade, blade);
             }
 
-            function openBladeNew() {
-                $scope.selectedNodeId = null;
-
-                var newBlade = {
-                    id: 'storeDetails',
-                    currentEntity: {},
-                    title: 'stores.blades.new-store-wizard.title',
-                    subtitle: 'stores.blades.new-store-wizard.subtitle',
-                    controller: 'virtoCommerce.storeModule.newStoreWizardController',
-                    template: 'Modules/$(VirtoCommerce.Store)/Scripts/wizards/newStore/new-store-wizard.tpl.html'
-                };
-                bladeNavigationService.showBlade(newBlade, blade);
-            }
-
             blade.headIcon = 'fa-comments';
 
             blade.toolbarCommands = [
@@ -58,14 +44,6 @@ angular.module('CustomerReviews.Web')
                     canExecuteMethod: function () {
                         return true;
                     }
-                },
-                {
-                    name: "platform.commands.add", icon: 'fa fa-plus',
-                    executeMethod: openBladeNew,
-                    canExecuteMethod: function () {
-                        return true;
-                    },
-                    permission: 'store:create'
                 }
             ];
 

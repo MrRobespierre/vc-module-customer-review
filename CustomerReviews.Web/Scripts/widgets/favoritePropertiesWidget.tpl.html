@@ -1,10 +1,18 @@
-﻿<div class="gridster-cnt">
+﻿<div class="gridster-cnt" ng-if="blade.currentEntity.propertyValues.length !== 0">
     <ul class="list __stats">
         <li class="list-item" ng-repeat="value in blade.currentEntity.propertyValues">
             {{ value.property.name }}
             <span class="list-price">
                 {{ value.rating }}
             </span>
+        </li>
+    </ul>
+</div>
+<div class="gridster-cnt" ng-if="blade.currentEntity.propertyValues.length === 0">
+    <ul class="list __stats">
+        <li class="list-item" ng-repeat="property in blade.favoriteProperties">
+            {{ property.name }}
+            <span class="list-price">N/A</span>
         </li>
     </ul>
 </div>
