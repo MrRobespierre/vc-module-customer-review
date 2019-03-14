@@ -1,18 +1,26 @@
 {
-    "customerReviews": {
-        "blades": {
-            "review-list": {
-                "labels": {
-                    "content": "Content",
-                    "modifiedDate": "Last updated",
-                    "no-review": "No Customer Reviews found"
-                }
-            }
-        },
-        "widgets": {
-            "item-detail": {
-                "title": "Customer reviews"
-            }
+  "customerReviews": {
+    "blades": {
+      "review-list": {
+        "labels": {
+          "content": "Content",
+          "modifiedDate": "Last updated",
+          "no-review": "No Customer Reviews found"
         }
+      },
+      "review-detail": {
+        "labels": {
+          "isActive": "Is active",
+          "author": "Author",
+          "productRating": "Product rating",
+          "content": "Content"
+        }
+      }
+    },
+    "widgets": {
+      "item-detail": {
+        "title": "Customer reviews"
+      }
     }
+  }
 }

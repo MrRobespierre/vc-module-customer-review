@@ -1,34 +1,50 @@
-﻿<div class="blade">
-    <div class="blade-container">
-        <div class="blade-content">
-            <div class="blade-inner">
-                <div class="form-group">
-                    <label class="form-label">Author</label>
-                    <div class="form-input">
-                        <input type="text"
-                               id="content"
-                               name="content"
-                               readonly
-                               ng-model="blade.currentEntity.authorNickname">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Content</label>
-                    <div class="form-input">
-                        <input type="text"
-                               id="content"
-                               name="content"
-                               readonly
-                               ng-model="blade.currentEntity.content">
-                    </div>
-                </div>
-                
-                <va-widget-container group="reviewDetail"
-                                     blade="blade"
-                                     data="blade.currentEntity"
-                                     gridster-opts="{width: 526}">
-                </va-widget-container>
+﻿<div class="blade-content">
+    <div class="blade-inner">
+        <div class="form-group">
+            <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.isActive' | translate }}</label>
+            <div class="form-input">
+                <label class="form-label __switch">
+                    <input type="checkbox" ng-model="blade.currentEntity.isActive">
+                    <span class="switch"></span>
+                </label>
             </div>
+        </div>
+        <div class="clearfix">
+            <div class="column">
+                <ul class="list __info">
+                    <li class="list-item">
+                        <div class="list-t">{{ 'customerReviews.blades.review-detail.labels.author' | translate }}</div>
+                        <div class="list-descr">{{ blade.currentEntity.authorNickname }}</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="column">
+                <ul class="list __info">
+                    <li class="list-item">
+                        <div class="list-t">{{ 'customerReviews.blades.review-detail.labels.productRating' | translate }}</div>
+                        <div class="list-descr">{{ blade.currentEntity.productRating }}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">{{ 'customerReviews.blades.review-detail.labels.content' | translate }}</label>
+            <div class="form-input">
+                <textarea class="form-control"
+                          name="content"
+                          required cols="30"
+                          rows="5"
+                          ng-model="blade.currentEntity.content"
+                          readonly></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <va-widget-container group="reviewDetail"
+                                 blade="blade"
+                                 data="blade.currentEntity"
+                                 gridster-opts="{width: 526}">
+            </va-widget-container>
         </div>
     </div>
 </div>

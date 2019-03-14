@@ -11,6 +11,8 @@ namespace CustomerReviews.Core.Model
 
         public string PropertyId { get; set; }
 
+        public FavoriteProperty Property { get; set; }
+
         public string ReviewId { get; set; }
 
         public int Rating { get; set; }

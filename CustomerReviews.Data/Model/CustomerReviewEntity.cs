@@ -78,14 +78,12 @@ namespace CustomerReviews.Data.Model
             IsActive = customerReview.IsActive;
             ProductId = customerReview.ProductId;
             ProductRating = customerReview.ProductRating;
-            IEnumerable<FavoritePropertyValueEntity> propertyValues = customerReview
-                                                                      .PropertyValues
-                                                                      .Select(x => AbstractTypeFactory<FavoritePropertyValueEntity>
-                                                                                   .TryCreateInstance()
-                                                                                   .FromModel(x, pkMap));
+            var propertyValues = customerReview.PropertyValues
+                                               .Select(x => AbstractTypeFactory<FavoritePropertyValueEntity>
+                                                            .TryCreateInstance()
+                                                            .FromModel(x, pkMap));
             PropertyValues = new ObservableCollection<FavoritePropertyValueEntity>(propertyValues);
-
-
+            
             return this;
         }
 

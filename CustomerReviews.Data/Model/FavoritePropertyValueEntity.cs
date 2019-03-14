@@ -35,6 +35,7 @@ namespace CustomerReviews.Data.Model
         {
             model.Id = Id;
             model.PropertyId = PropertyId;
+            model.Property = Property.ToModel(AbstractTypeFactory<FavoriteProperty>.TryCreateInstance());
             model.ReviewId = ReviewId;
             model.Rating = Rating;
 

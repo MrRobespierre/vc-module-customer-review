@@ -51,10 +51,5 @@ angular.module(moduleTemplateName, [])
             size: [3, 1]
         };
         widgetService.registerWidget(favoritePropertiesWidget, 'reviewDetail');
-
-        var reviewRatingWidget = {
-            template: 'Modules/$(CustomerReviews.Web)/Scripts/widgets/reviewRatingWidget.tpl.html'
-        };
-        widgetService.registerWidget(reviewRatingWidget, 'reviewDetail');
     }
 ]);

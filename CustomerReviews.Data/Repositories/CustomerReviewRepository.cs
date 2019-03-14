@@ -20,30 +20,24 @@ namespace CustomerReviews.Data.Repositories
 
         public IQueryable<FavoritePropertyEntity> FavoriteProperties => GetAsQueryable<FavoritePropertyEntity>();
 
-        public IQueryable<CustomerReviewEntity> CustomerReviews => GetAsQueryable<CustomerReviewEntity>().Include(x => x.PropertyValues);
+        public IQueryable<CustomerReviewEntity> CustomerReviews =>
+            GetAsQueryable<CustomerReviewEntity>()
+                .Include(x => x.PropertyValues)
+                .Include(x => x.PropertyValues
+                               .Select(y => y.Property));
 
-        public FavoritePropertyEntity[] GetProductFavoriteProperties(string productId)
-        {
-            FavoritePropertyEntity[] result = FavoriteProperties.Where(x => x.ProductId == productId).ToArray();
-            return result;
-        }
+        public FavoritePropertyEntity[] GetProductFavoriteProperties(string productId) => 
+            FavoriteProperties.Where(x => x.ProductId == productId).ToArray();
 
-        public CustomerReviewEntity GetCustomerReview(string id)
-        {
-            return CustomerReviews.FirstOrDefault(x => x.Id == id);
-        }
+        public CustomerReviewEntity GetCustomerReview(string id) => 
+            CustomerReviews.FirstOrDefault(x => x.Id == id);
 
-        public CustomerReviewEntity[] GetByIds(string[] ids)
-        {
-            CustomerReviewEntity[] result = CustomerReviews.Where(x => ids.Contains(x.Id))
-                                                           .ToArray();
-
-            return result;
-        }
+        public CustomerReviewEntity[] GetByIds(string[] ids) => 
+            CustomerReviews.Where(x => ids.Contains(x.Id)).ToArray();
 
         public void DeleteCustomerReviews(string[] ids)
         {
-            CustomerReviewEntity[] items = GetByIds(ids);
+            var items = GetByIds(ids);
             foreach (CustomerReviewEntity item in items)
             {
                 Remove(item);

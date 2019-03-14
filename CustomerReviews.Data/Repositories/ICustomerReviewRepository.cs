@@ -6,8 +6,6 @@ namespace CustomerReviews.Data.Repositories
 {
     public interface ICustomerReviewRepository : IRepository
     {
-        IQueryable<FavoritePropertyEntity> FavoriteProperties { get; }
-
         IQueryable<CustomerReviewEntity> CustomerReviews { get; }
 
         FavoritePropertyEntity[] GetProductFavoriteProperties(string productId);
