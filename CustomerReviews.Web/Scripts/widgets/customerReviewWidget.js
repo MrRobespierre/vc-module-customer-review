@@ -20,7 +20,8 @@ angular.module('CustomerReviews.Web')
             var newBlade = {
                 id: "reviewsList",
                 filter: filter,
-                title: 'Customer reviews for "' + blade.title + '"',
+                title: 'customerReviews.blades.review-list.labels.title',
+                titleValues: { sku: blade.title },
                 controller: 'CustomerReviews.Web.reviewsListController',
                 template: 'Modules/$(CustomerReviews.Web)/Scripts/blades/reviews-list.tpl.html'
             };

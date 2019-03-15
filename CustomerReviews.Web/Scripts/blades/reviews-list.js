@@ -25,7 +25,8 @@ angular.module('CustomerReviews.Web').controller('CustomerReviews.Web.reviewsLis
             id: 'reviewDetails',
             currentEntityId: data.id,
             currentEntity: data,
-            title: data.name,
+            title: 'customerReviews.blades.review-detail.labels.title',
+            titleValues: { author: data.authorNickname },
             controller: 'CustomerReviews.Web.reviewDetailController',
             template: 'Modules/$(CustomerReviews.Web)/Scripts/blades/review-detail.tpl.html'
         };

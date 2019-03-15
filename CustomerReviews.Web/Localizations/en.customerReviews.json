@@ -5,7 +5,8 @@
         "labels": {
           "content": "Content",
           "modifiedDate": "Last updated",
-          "no-review": "No Customer Reviews found"
+          "no-review": "No Customer Reviews found",
+          "title": "Customer reviews for \"{{sku}}\""
         }
       },
       "review-detail": {
@@ -13,7 +14,8 @@
           "isActive": "Is active",
           "author": "Author",
           "productRating": "Product rating",
-          "content": "Content"
+          "content": "Content",
+          "title": "Review from {{author}}"
         }
       }
     },
