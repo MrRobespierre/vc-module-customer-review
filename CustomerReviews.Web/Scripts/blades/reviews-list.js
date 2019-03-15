@@ -1,8 +1,25 @@
-angular.module('CustomerReviews.Web').controller('CustomerReviews.Web.reviewsListController', ['$scope', 'CustomerReviews.WebApi', 'platformWebApp.bladeUtils', 'uiGridConstants', 'platformWebApp.uiGridHelper', function ($scope, reviewsApi, bladeUtils, uiGridConstants, uiGridHelper) {
+angular.module('CustomerReviews.Web').controller('CustomerReviews.Web.reviewsListController', ['$scope', 'CustomerReviews.WebApi', 'platformWebApp.bladeUtils', 'uiGridConstants', 'platformWebApp.uiGridHelper', 'platformWebApp.dialogService', function ($scope, reviewsApi, bladeUtils, uiGridConstants, uiGridHelper, dialogService) {
     $scope.uiGridConstants = uiGridConstants;
 
     var blade = $scope.blade;
     var bladeNavigationService = bladeUtils.bladeNavigationService;
+    blade.headIcon = 'fa-comments';
+    blade.toolbarCommands = [
+        {
+            name: "platform.commands.refresh", icon: 'fa fa-refresh',
+            executeMethod: blade.refresh,
+            canExecuteMethod: function () {
+                return true;
+            }
+        },
+        {
+            name: "platform.commands.delete",
+            icon: 'fa fa-trash-o',
+            executeMethod: function () { deleteList($scope.gridApi.selection.getSelectedRows()); },
+            canExecuteMethod: isItemsChecked,
+            permission: 'catalog:delete'
+        }
+    ];
 
     blade.refresh = function () {
         blade.isLoading = true;
@@ -33,21 +50,29 @@ angular.module('CustomerReviews.Web').controller('CustomerReviews.Web.reviewsLis
         bladeNavigationService.showBlade(newBlade, blade);
     }
 
-    blade.headIcon = 'fa-comments';
+    function isItemsChecked() {
+        return $scope.gridApi && _.any($scope.gridApi.selection.getSelectedRows());
+    }
 
-    blade.toolbarCommands = [
-        {
-            name: "platform.commands.refresh", icon: 'fa fa-refresh',
-            executeMethod: blade.refresh,
-            canExecuteMethod: function () {
-                return true;
+    function deleteList(selection) {
+        var dialog = {
+            id: 'confirmDeleteItems',
+            title: 'customerReviews.dialogs.deleteReviews.title',
+            message: 'customerReviews.dialogs.deleteReviews.message',
+            callback: function (remove) {
+                if (remove) {
+                    var ids = _.pluck(selection, 'id');
+                    reviewsApi.remove({ ids: ids }, function() {
+                        blade.refresh();
+                    });
+                }
             }
         }
-    ];
+        dialogService.showConfirmationDialog(dialog);
+    }
 
     // simple and advanced filtering
     var filter = $scope.filter = blade.filter || {};
-
     filter.criteriaChanged = function () {
         if ($scope.pageSettings.currentPage > 1) {
             $scope.pageSettings.currentPage = 1;
