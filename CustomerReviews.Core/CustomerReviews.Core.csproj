@@ -49,6 +49,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\AverageProductRating.cs" />
     <Compile Include="Model\CustomerReview.cs" />
     <Compile Include="Model\CustomerReviewSearchCriteria.cs" />
     <Compile Include="Model\FavoriteProperty.cs" />

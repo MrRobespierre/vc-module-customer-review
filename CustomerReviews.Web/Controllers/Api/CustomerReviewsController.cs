@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -5,6 +6,7 @@ using CustomerReviews.Core.Model;
 using CustomerReviews.Core.Services;
 using CustomerReviews.Web.Security;
 using VirtoCommerce.Domain.Commerce.Model.Search;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Web.Security;
 
 
@@ -21,7 +23,7 @@ namespace CustomerReviews.Web.Controllers.Api
         }
 
         public CustomerReviewsController(
-            ICustomerReviewSearchService customerReviewSearchService, 
+            ICustomerReviewSearchService customerReviewSearchService,
             ICustomerReviewService customerReviewService)
         {
             _customerReviewSearchService = customerReviewSearchService;
@@ -35,10 +37,31 @@ namespace CustomerReviews.Web.Controllers.Api
         [HttpGet]
         [Route("{id}")]
         [ResponseType(typeof(CustomerReview))]
-        public IHttpActionResult GetProductFavoriteProperties(string id)
+        public IHttpActionResult GetCustomerReview(string id)
         {
             CustomerReview customerReview = _customerReviewService.GetById(id);
             return Ok(customerReview);
+        }
+
+        /// <summary>
+        /// Gets an average product rating based on active reviews.
+        /// </summary>
+        [HttpGet]
+        [Route("getAverageProductRating/{productId}")]
+        [ResponseType(typeof(AverageProductRating))]
+        public IHttpActionResult GetAverageProductRating(string productId)
+        {
+            var criteria = new CustomerReviewSearchCriteria
+            {
+                IsActive = true,
+                ProductIds = new[] { productId }
+            };
+            var reviews = _customerReviewSearchService.SearchCustomerReviews(criteria);
+            if (reviews.TotalCount == 0)
+                return Ok(new AverageProductRating(productId, 0, 0));
+
+            double averageRating = reviews.Results.Average(x => x.ProductRating);
+            return Ok(new AverageProductRating(productId, averageRating, reviews.TotalCount));
         }
 
         /// <summary>
