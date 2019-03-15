@@ -13,7 +13,7 @@ using VirtoCommerce.Platform.Core.Web.Security;
 namespace CustomerReviews.Web.Controllers.Api
 {
     [RoutePrefix("api/customerReviews")]
-    public sealed class CustomerReviewsController : ApiController
+    public class CustomerReviewsController : ApiController
     {
         private readonly ICustomerReviewSearchService _customerReviewSearchService;
         private readonly ICustomerReviewService _customerReviewService;
@@ -57,11 +57,15 @@ namespace CustomerReviews.Web.Controllers.Api
                 ProductIds = new[] { productId }
             };
             var reviews = _customerReviewSearchService.SearchCustomerReviews(criteria);
-            if (reviews.TotalCount == 0)
-                return Ok(new AverageProductRating(productId, 0, 0));
 
-            double averageRating = reviews.Results.Average(x => x.ProductRating);
-            return Ok(new AverageProductRating(productId, averageRating, reviews.TotalCount));
+            var result = AbstractTypeFactory<AverageProductRating>.TryCreateInstance();
+            result.ProductId = productId;
+            if (reviews.TotalCount == 0)
+                return Ok(result);
+
+            result.Rating = reviews.Results.Average(x => x.ProductRating);
+            result.ReviewsCount = reviews.TotalCount;
+            return Ok(result);
         }
 
         /// <summary>

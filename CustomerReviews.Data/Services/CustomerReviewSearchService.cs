@@ -14,7 +14,7 @@ using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace CustomerReviews.Data.Services
 {
-    public sealed class CustomerReviewSearchService : ServiceBase, ICustomerReviewSearchService
+    public class CustomerReviewSearchService : ServiceBase, ICustomerReviewSearchService
     {
         private readonly Func<ICustomerReviewRepository> _repositoryFactory;
         private readonly ICustomerReviewService _customerReviewService;

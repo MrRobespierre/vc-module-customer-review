@@ -6,7 +6,7 @@ using VirtoCommerce.Platform.Data.Infrastructure.Interceptors;
 
 namespace CustomerReviews.Data.Repositories
 {
-    public sealed class CustomerReviewRepository : EFRepositoryBase, ICustomerReviewRepository
+    public class CustomerReviewRepository : EFRepositoryBase, ICustomerReviewRepository
     {
         public CustomerReviewRepository()
         {

@@ -3,7 +3,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace CustomerReviews.Core.Model
 {
-    public sealed class FavoritePropertyValue : Entity
+    public class FavoritePropertyValue : Entity
     {
         public FavoritePropertyValue()
         {

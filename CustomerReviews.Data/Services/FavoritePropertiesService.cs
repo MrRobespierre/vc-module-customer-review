@@ -11,7 +11,7 @@ using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace CustomerReviews.Data.Services
 {
-    public sealed class FavoritePropertiesService : ServiceBase, IFavoritePropertyService
+    public class FavoritePropertiesService : ServiceBase, IFavoritePropertyService
     {
         private readonly Func<ICustomerReviewRepository> _repositoryFactory;
 

@@ -9,7 +9,7 @@ using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace CustomerReviews.Data.Services
 {
-    public sealed class CustomerReviewService : ServiceBase, ICustomerReviewService
+    public class CustomerReviewService : ServiceBase, ICustomerReviewService
     {
         private readonly Func<ICustomerReviewRepository> _repositoryFactory;
 

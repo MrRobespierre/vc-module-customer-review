@@ -3,7 +3,7 @@ using VirtoCommerce.Domain.Commerce.Model.Search;
 
 namespace CustomerReviews.Core.Model
 {
-    public sealed class CustomerReviewSearchCriteria : SearchCriteriaBase
+    public class CustomerReviewSearchCriteria : SearchCriteriaBase
     {
         public string[] ProductIds { get; set; }
 

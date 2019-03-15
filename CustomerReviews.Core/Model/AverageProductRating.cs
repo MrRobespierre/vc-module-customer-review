@@ -2,17 +2,14 @@ namespace CustomerReviews.Core.Model
 {
     public class AverageProductRating
     {
-        public AverageProductRating(string productId, double rating, double reviewsCount)
+        public AverageProductRating()
         {
-            ProductId = productId;
-            Rating = rating;
-            ReviewsCount = reviewsCount;
         }
 
-        public string ProductId { get; }
+        public string ProductId { get; set; }
 
-        public double Rating { get; }
+        public double Rating { get; set; }
 
-        public double ReviewsCount { get; }
+        public double ReviewsCount { get; set; }
     }
 }

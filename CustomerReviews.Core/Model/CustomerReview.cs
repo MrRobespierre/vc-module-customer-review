@@ -3,7 +3,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace CustomerReviews.Core.Model
 {
-    public sealed class CustomerReview : AuditableEntity
+    public class CustomerReview : AuditableEntity
     {
         public CustomerReview()
         {

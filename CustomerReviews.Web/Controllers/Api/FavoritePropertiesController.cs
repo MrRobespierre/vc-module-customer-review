@@ -8,7 +8,7 @@ using CustomerReviews.Core.Services;
 namespace CustomerReviews.Web.Controllers.Api
 {
     [RoutePrefix("api/favoriteProperties")]
-    public sealed class FavoritePropertiesController : ApiController
+    public class FavoritePropertiesController : ApiController
     {
         private readonly IFavoritePropertyService _favoritePropertyService;
 
