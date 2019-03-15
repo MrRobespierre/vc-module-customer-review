@@ -48,7 +48,7 @@ angular.module(moduleTemplateName, [])
 
         var favoritePropertiesWidget = {
             template: 'Modules/$(CustomerReviews.Web)/Scripts/widgets/favoritePropertiesWidget.tpl.html',
-            size: [3, 1]
+            size: [3, 2]
         };
         widgetService.registerWidget(favoritePropertiesWidget, 'reviewDetail');
     }
