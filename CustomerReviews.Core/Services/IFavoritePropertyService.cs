@@ -6,5 +6,7 @@ namespace CustomerReviews.Core.Services
     public interface IFavoritePropertyService
     {
         FavoriteProperty[] GetProductFavoriteProperties(string productId);
+
+        AveragePropertyRating[] GetAveragePropertyRatings(string productId);
     }
 }

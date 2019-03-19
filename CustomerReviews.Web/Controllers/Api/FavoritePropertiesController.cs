@@ -26,7 +26,16 @@ namespace CustomerReviews.Web.Controllers.Api
         [ResponseType(typeof(FavoriteProperty[]))]
         public IHttpActionResult GetProductFavoriteProperties(string productId)
         {
-            FavoriteProperty[] result = _favoritePropertyService.GetProductFavoriteProperties(productId);
+            var result = _favoritePropertyService.GetProductFavoriteProperties(productId);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("getAveragePropertyRatings/{productId}")]
+        [ResponseType(typeof(AveragePropertyRating[]))]
+        public IHttpActionResult GetAveragePropertyRatings(string productId)
+        {
+            var result = _favoritePropertyService.GetAveragePropertyRatings(productId);
             return Ok(result);
         }
     }
