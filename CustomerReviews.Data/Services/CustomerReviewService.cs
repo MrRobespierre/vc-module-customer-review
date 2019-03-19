@@ -81,5 +81,21 @@ namespace CustomerReviews.Data.Services
                 CommitChanges(repository);
             }
         }
+
+        public AverageProductRating GetAverageProductRating(string productId)
+        {
+            using (ICustomerReviewRepository repository = _repositoryFactory())
+            {
+                var reviews = repository.CustomerReviews.Where(x => x.ProductId == productId && x.IsActive).ToArray();
+                var result = AbstractTypeFactory<AverageProductRating>.TryCreateInstance();
+                result.ProductId = productId;
+                if (!reviews.Any())
+                    return result;
+
+                result.Rating = reviews.Average(x => x.ProductRating);
+                result.ReviewsCount = reviews.Length;
+                return result;
+            }
+        }
     }
 }

@@ -97,20 +97,7 @@ namespace CustomerReviews.Web.Controllers.Api
         [ResponseType(typeof(AverageProductRating))]
         public IHttpActionResult GetAverageProductRating(string productId)
         {
-            var criteria = new CustomerReviewSearchCriteria
-            {
-                IsActive = true,
-                ProductIds = new[] { productId }
-            };
-            var reviews = _customerReviewSearchService.SearchCustomerReviews(criteria);
-
-            var result = AbstractTypeFactory<AverageProductRating>.TryCreateInstance();
-            result.ProductId = productId;
-            if (reviews.TotalCount == 0)
-                return Ok(result);
-
-            result.Rating = reviews.Results.Average(x => x.ProductRating);
-            result.ReviewsCount = reviews.TotalCount;
+            var result =  _customerReviewService.GetAverageProductRating(productId);
             return Ok(result);
         }
 

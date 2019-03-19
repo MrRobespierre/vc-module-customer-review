@@ -12,5 +12,7 @@ namespace CustomerReviews.Core.Services
         void SaveCustomerReviews(CustomerReview[] items);
 
         void DeleteCustomerReviews(string[] ids);
+
+        AverageProductRating GetAverageProductRating(string productId);
     }
 }
