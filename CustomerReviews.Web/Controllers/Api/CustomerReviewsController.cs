@@ -17,6 +17,7 @@ namespace CustomerReviews.Web.Controllers.Api
     {
         private readonly ICustomerReviewSearchService _customerReviewSearchService;
         private readonly ICustomerReviewService _customerReviewService;
+        private readonly IFavoritePropertyService _favoritePropertyService;
 
         public CustomerReviewsController()
         {
@@ -24,10 +25,12 @@ namespace CustomerReviews.Web.Controllers.Api
 
         public CustomerReviewsController(
             ICustomerReviewSearchService customerReviewSearchService,
-            ICustomerReviewService customerReviewService)
+            ICustomerReviewService customerReviewService,
+            IFavoritePropertyService favoritePropertyService)
         {
             _customerReviewSearchService = customerReviewSearchService;
             _customerReviewService = customerReviewService;
+            _favoritePropertyService = favoritePropertyService;
         }
 
         /// <summary>
@@ -41,31 +44,6 @@ namespace CustomerReviews.Web.Controllers.Api
         {
             CustomerReview customerReview = _customerReviewService.GetById(id);
             return Ok(customerReview);
-        }
-
-        /// <summary>
-        /// Gets an average product rating based on active reviews.
-        /// </summary>
-        [HttpGet]
-        [Route("getAverageProductRating/{productId}")]
-        [ResponseType(typeof(AverageProductRating))]
-        public IHttpActionResult GetAverageProductRating(string productId)
-        {
-            var criteria = new CustomerReviewSearchCriteria
-            {
-                IsActive = true,
-                ProductIds = new[] { productId }
-            };
-            var reviews = _customerReviewSearchService.SearchCustomerReviews(criteria);
-
-            var result = AbstractTypeFactory<AverageProductRating>.TryCreateInstance();
-            result.ProductId = productId;
-            if (reviews.TotalCount == 0)
-                return Ok(result);
-
-            result.Rating = reviews.Results.Average(x => x.ProductRating);
-            result.ReviewsCount = reviews.TotalCount;
-            return Ok(result);
         }
 
         /// <summary>
@@ -109,6 +87,55 @@ namespace CustomerReviews.Web.Controllers.Api
         {
             _customerReviewService.DeleteCustomerReviews(ids);
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        /// <summary>
+        /// Gets an average product rating based on active reviews.
+        /// </summary>
+        [HttpGet]
+        [Route("{productId}/averageProductRating")]
+        [ResponseType(typeof(AverageProductRating))]
+        public IHttpActionResult GetAverageProductRating(string productId)
+        {
+            var criteria = new CustomerReviewSearchCriteria
+            {
+                IsActive = true,
+                ProductIds = new[] { productId }
+            };
+            var reviews = _customerReviewSearchService.SearchCustomerReviews(criteria);
+
+            var result = AbstractTypeFactory<AverageProductRating>.TryCreateInstance();
+            result.ProductId = productId;
+            if (reviews.TotalCount == 0)
+                return Ok(result);
+
+            result.Rating = reviews.Results.Average(x => x.ProductRating);
+            result.ReviewsCount = reviews.TotalCount;
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("{productId}/averagePropertyRatings")]
+        [ResponseType(typeof(AveragePropertyRating[]))]
+        [CheckPermission(Permission = PredefinedPermissions.CustomerReviewRead)]
+        public IHttpActionResult GetAveragePropertyRatings(string productId)
+        {
+            var result = _favoritePropertyService.GetAveragePropertyRatings(productId);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Gets favorite properties for product.
+        /// </summary>
+        /// <param name="productId">The Product id.</param>
+        [HttpGet]
+        [Route("{productId}/favoriteProperties")]
+        [ResponseType(typeof(FavoriteProperty[]))]
+        [CheckPermission(Permission = PredefinedPermissions.CustomerReviewRead)]
+        public IHttpActionResult GetProductFavoriteProperties(string productId)
+        {
+            var result = _favoritePropertyService.GetProductFavoriteProperties(productId);
+            return Ok(result);
         }
     }
 }
