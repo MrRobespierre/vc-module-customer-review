@@ -10,10 +10,6 @@ namespace CustomerReviews.Data.Model
 {
     public class FavoritePropertyValueEntity : Entity
     {
-        public FavoritePropertyValueEntity()
-        {
-        }
-
         [Required]
         [ForeignKey(nameof(Property))]
         public string PropertyId { get; set; }
