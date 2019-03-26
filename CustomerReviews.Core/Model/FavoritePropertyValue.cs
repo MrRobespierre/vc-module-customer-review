@@ -5,10 +5,6 @@ namespace CustomerReviews.Core.Model
 {
     public class FavoritePropertyValue : Entity
     {
-        public FavoritePropertyValue()
-        {
-        }
-
         public string PropertyId { get; set; }
 
         public FavoriteProperty Property { get; set; }

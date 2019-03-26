@@ -18,17 +18,16 @@ namespace CustomerReviews.Data.Model
         [ForeignKey(nameof(Property))]
         public string PropertyId { get; set; }
 
-        [Required]
         public FavoritePropertyEntity Property { get; set; }
 
         [Required]
         [ForeignKey(nameof(Review))]
         public string ReviewId { get; set; }
 
-        [Required]
         public CustomerReviewEntity Review { get; set; }
 
         [Required]
+        [Range(1, 5)]
         public int Rating { get; set; }
 
         public FavoritePropertyValue ToModel(FavoritePropertyValue model)

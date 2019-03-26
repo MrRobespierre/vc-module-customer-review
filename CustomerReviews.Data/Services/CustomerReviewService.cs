@@ -38,33 +38,40 @@ namespace CustomerReviews.Data.Services
             }
         }
 
-        public void SaveCustomerReviews(CustomerReview[] items)
+        public void SaveCustomerReview(CustomerReview item)
         {
-            if (items == null)
-                throw new ArgumentNullException(nameof(items));
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
 
             var pkMap = new PrimaryKeyResolvingMap();
             using (ICustomerReviewRepository repository = _repositoryFactory())
             {
                 using (ObservableChangeTracker changeTracker = GetChangeTracker(repository))
                 {
-                    CustomerReviewEntity[] alreadyExistEntities = repository.GetByIds(
-                        items.Where(m => !m.IsTransient()).Select(x => x.Id).ToArray());
-                    foreach (CustomerReview derivativeContract in items)
+                    if (!item.IsTransient())
                     {
-                        CustomerReviewEntity sourceEntity = AbstractTypeFactory<CustomerReviewEntity>.
-                                                            TryCreateInstance().
-                                                            FromModel(derivativeContract, pkMap);
-                        CustomerReviewEntity targetEntity = alreadyExistEntities.FirstOrDefault(x => x.Id == sourceEntity.Id);
-                        if (targetEntity != null)
+                        var sourceEntity = AbstractTypeFactory<CustomerReviewEntity>.TryCreateInstance().FromModel(item, pkMap);
+                        var existsEntity = repository.GetCustomerReview(item.Id);
+                        if (existsEntity != null)
                         {
-                            changeTracker.Attach(targetEntity);
-                            sourceEntity.Patch(targetEntity);
+                            changeTracker.Attach(existsEntity);
+                            sourceEntity.Patch(existsEntity);
                         }
                         else
                         {
                             repository.Add(sourceEntity);
                         }
+                    }
+                    else
+                    {
+                        item.Id = Guid.NewGuid().ToString("N");
+                        foreach (var value in item.PropertyValues)
+                        {
+                            value.ReviewId = item.Id;
+                        }
+
+                        var sourceEntity = AbstractTypeFactory<CustomerReviewEntity>.TryCreateInstance().FromModel(item, pkMap);
+                        repository.Add(sourceEntity);
                     }
 
                     CommitChanges(repository);

@@ -3,6 +3,7 @@ using System.Data.Entity;
 using CustomerReviews.Core.Model;
 using CustomerReviews.Core.Services;
 using CustomerReviews.Data.Migrations;
+using CustomerReviews.Data.Model;
 using CustomerReviews.Data.Repositories;
 using CustomerReviews.Data.Services;
 
@@ -43,7 +44,7 @@ namespace CustomerReviews.Test
                 Content = "Liked that"
             };
 
-            CustomerReviewService.SaveCustomerReviews(new[] { item });
+            CustomerReviewService.SaveCustomerReview(item);
 
             getByIdsResult = CustomerReviewService.GetByIds(new[] { CustomerReviewId });
             Assert.Single(getByIdsResult);
@@ -56,7 +57,7 @@ namespace CustomerReviews.Test
             Assert.NotEqual(updatedContent, item.Content);
 
             item.Content = updatedContent;
-            CustomerReviewService.SaveCustomerReviews(new[] { item });
+            CustomerReviewService.SaveCustomerReview(item);
             getByIdsResult = CustomerReviewService.GetByIds(new[] { CustomerReviewId });
             Assert.Single(getByIdsResult);
 
@@ -78,6 +79,47 @@ namespace CustomerReviews.Test
         }
 
         [Fact]
+        public void CanCreateCustomerReview()
+        {
+            var item = new CustomerReview
+            {
+                ProductId = ProductId,
+                AuthorNickname = "John Doe",
+                Content = "Liked that",
+                IsActive = true,
+                ProductRating = 4,
+                PropertyValues = new[]
+                {
+                    new FavoritePropertyValue
+                    {
+                        Id = Guid.NewGuid().ToString("N"),
+                        Property = new FavoriteProperty
+                        {
+                            Id = "1",
+                            ProductId = ProductId,
+                            Name = "Sound quality"
+                        },
+                        PropertyId = "1",
+                        Rating = 5
+                    }
+                }
+            };
+
+            try
+            {
+                CustomerReviewService.SaveCustomerReview(item);
+
+                Assert.False(item.IsTransient());
+                var getByIdItem = CustomerReviewService.GetById(item.Id);
+                Assert.NotNull(getByIdItem);
+            }
+            finally
+            {
+                CustomerReviewService.DeleteCustomerReviews(new[] { item.Id });
+            }
+        }
+
+        [Fact]
         public void CanDeleteCustomerReviews()
         {
             CustomerReviewService.DeleteCustomerReviews(new[] { CustomerReviewId });
@@ -87,10 +129,10 @@ namespace CustomerReviews.Test
             Assert.Empty(getByIdsResult);
         }
 
-        private ICustomerReviewSearchService CustomerReviewSearchService => 
+        private ICustomerReviewSearchService CustomerReviewSearchService =>
             new CustomerReviewSearchService(GetRepository, CustomerReviewService);
 
-        private ICustomerReviewService CustomerReviewService => 
+        private ICustomerReviewService CustomerReviewService =>
             new CustomerReviewService(GetRepository);
 
 

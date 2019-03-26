@@ -7,6 +7,7 @@ namespace CustomerReviews.Core.Model
     {
         public CustomerReview()
         {
+            PropertyValues = new FavoritePropertyValue[0];
         }
 
         public string AuthorNickname { get; set; }

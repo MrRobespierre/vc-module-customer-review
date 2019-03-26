@@ -33,6 +33,7 @@ namespace CustomerReviews.Data.Model
         public string ProductId { get; set; }
 
         [Required]
+        [Range(1, 5)]
         public int ProductRating { get; set; }
 
         public ObservableCollection<FavoritePropertyValueEntity> PropertyValues { get; set; }

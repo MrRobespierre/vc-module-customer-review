@@ -70,7 +70,11 @@ namespace CustomerReviews.Web.Controllers.Api
         [CheckPermission(Permission = PredefinedPermissions.CustomerReviewUpdate)]
         public IHttpActionResult Update(CustomerReview[] customerReviews)
         {
-            _customerReviewService.SaveCustomerReviews(customerReviews);
+            foreach (var customerReview in customerReviews)
+            {
+                _customerReviewService.SaveCustomerReview(customerReview);
+            }
+            
             return StatusCode(HttpStatusCode.NoContent);
         }
 

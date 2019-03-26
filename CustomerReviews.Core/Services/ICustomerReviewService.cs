@@ -8,8 +8,8 @@ namespace CustomerReviews.Core.Services
         CustomerReview GetById(string id);
 
         CustomerReview[] GetByIds(string[] ids);
-
-        void SaveCustomerReviews(CustomerReview[] items);
+        
+        void SaveCustomerReview(CustomerReview item);
 
         void DeleteCustomerReviews(string[] ids);
 
