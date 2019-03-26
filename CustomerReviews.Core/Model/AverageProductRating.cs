@@ -6,6 +6,6 @@ namespace CustomerReviews.Core.Model
 
         public double Rating { get; set; }
 
-        public double ReviewsCount { get; set; }
+        public int ReviewsCount { get; set; }
     }
 }

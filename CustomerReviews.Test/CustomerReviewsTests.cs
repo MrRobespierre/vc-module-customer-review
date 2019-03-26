@@ -129,6 +129,48 @@ namespace CustomerReviews.Test
             Assert.Empty(getByIdsResult);
         }
 
+        [Fact]
+        public void CheckCalculateAverageProductRating()
+        {
+            const int firstRating = 2;
+            const int secondRating = 5;
+            const int reviewsCount = 2;
+            const double averageRating = 3.5D;
+
+            var firstItem = new CustomerReview
+            {
+                ProductId = ProductId,
+                AuthorNickname = "Test author",
+                Content = "Test content",
+                IsActive = true,
+                ProductRating = firstRating
+            };
+
+            var secondItem = new CustomerReview
+            {
+                ProductId = ProductId,
+                AuthorNickname = "Test author",
+                Content = "Test content",
+                IsActive = true,
+                ProductRating = secondRating
+            };
+
+            try
+            {
+                CustomerReviewService.SaveCustomerReview(firstItem);
+                CustomerReviewService.SaveCustomerReview(secondItem);
+
+                var productRating = CustomerReviewService.GetAverageProductRating(ProductId);
+                Assert.Equal(ProductId, productRating.ProductId);
+                Assert.Equal(reviewsCount, productRating.ReviewsCount);
+                Assert.Equal(averageRating, productRating.Rating);
+            }
+            finally
+            {
+                CustomerReviewService.DeleteCustomerReviews(new[] { firstItem.Id, secondItem.Id });
+            }
+        }
+
         private ICustomerReviewSearchService CustomerReviewSearchService =>
             new CustomerReviewSearchService(GetRepository, CustomerReviewService);
 
